@@ -172,7 +172,7 @@ vcftools --gzvcf allPops-CorVFnoQualMMdp3.g.vcf.gz \
 --out allPops-CorVFnoQualMMdp3MissingInds
 ```
 
-![Alt text](images/Missing_data_per_individual.png)
+<img src="images/Missing_data_per_individual.png" width="400" />
 
 As all individuals contained less than 40% missing data, they were all retained. 
 
