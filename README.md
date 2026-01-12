@@ -5,6 +5,7 @@ Maddie E. James, Jonathan D. Mitchell, Travis Britton, Ben Halliwell, Barbara Ho
 Genotypic and phenotypic convergence due to climatic adaptation in *Eucalyptus*.
 
 # Trait analysis
+---
 
 # Genetics analysis
 
@@ -197,9 +198,10 @@ Final dataset: 160,686,818 variant and invariant sites; 12,608,766 variant sites
 
 
 ## Convergence divergence models
-
+---
 
 ## Population genetics analyses
-
+---
 
 ## Genotype-Environment Association (GEA) analysis
+---
