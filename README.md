@@ -273,7 +273,7 @@ plink --vcf allPopsMAF0.01.recode.vcf --indep-pairwise 50 5 0.2 --allow-extra-ch
 plink --vcf allPopsMAF0.01.recode.vcf --extract allPopsMAF0.01_LD-50-5-0.2.prune.in --recode vcf --set-missing-var-ids @:# --allow-extra-chr --out allPopsMAF0.01_LD-50-5-0.2
 ```
 
-As the BayPass core model requires a set of neutral SNPs, flobal FST was calculated among all species.
+As the BayPass core model requires a set of neutral SNPs, global FST was calculated among all species.
 
 ```
 vcftools --vcf allPopsMAF0.01_LD-50-5-0.2.vcf \
