@@ -14,7 +14,7 @@ Genotypic and phenotypic convergence due to climatic adaptation in *Eucalyptus*.
 Leaf samples were sent to the Australian Genome Research Facility for DNA extractions and library preparation with the Illumina DNA Prep M Library Prep kit. Samples were pooled in equimolar concentrations and sequenced on two lanes of the NovaSeq 600 S4, 300 cycle with 150bp paired-end sequencing.
 
 ### Quality filtering and trimming
-For each sample raw reads were quality-trimmed with ```fastp``` v0.23.4, using: minimum base quality 10, maximum uncalled bases 50, and minimum read length 50 bp. An HTML report was generated for each sample.
+For each sample, raw reads were quality-trimmed with ```fastp``` v0.23.4, using: minimum base quality 10, maximum uncalled bases 50, and minimum read length 50 bp. An HTML report was generated for each sample.
 
 ```
 fastp --in1 forward.fastq.gz --in2 reverse.fastq.gz \
@@ -23,7 +23,7 @@ fastp --in1 forward.fastq.gz --in2 reverse.fastq.gz \
 ```
 
 ### Read alignment
-Reads were mapped to the *Eucalyptus grandis* v2.0 reference genome using ```BWA-MEM``` v0.7.19. Read groups were added during mapping. The SAM output was piped into ```SAMtools``` v1.19 for coordinate sorting and BAM creation.
+Reads were mapped to the *Eucalyptus grandis* v2.0 reference genome (https://phytozome-next.jgi.doe.gov/info/Egrandis_v2_0) using ```BWA-MEM``` v0.7.19. Read groups were added during mapping. The SAM output was piped into ```SAMtools``` v1.19 for coordinate sorting and BAM creation.
 
 ```
 bwa mem -t 12 -M -R "@RG\tSM:sample\tID:sampleID\tLB:lib1\tPL:ILLUMINA\tPU:barcode" reference.fasta \
@@ -32,14 +32,14 @@ samtools sort -@ 12 -o sample_srt.bam
 ```
 
 ### Alignment statistics
-Alignment statistics (number and percentage of reads mapped) were generated with ```SAMtools``` v1.19.
+Alignment statistics were generated with ```SAMtools``` v1.19.
 
 ```
 samtools flagstat sample_srt.bam > sample_srt_stats.txt
 ```
 
 ### Cleaning BAM files
-```Picard``` v3.1.1 CleanSam was used to clean each BAM prior to duplicate marking.
+```Picard``` v3.1.1 CleanSam was used to clean each BAM (to set soft-clipping for reads beyond end of the reference, and MAPQ to 0 for unmapped reads).
 
 ```
 java -Xmx8g -jar picard.jar CleanSam \
@@ -83,7 +83,7 @@ sample_Chrn_vrnt.g.vcf.gz \
 bcftools index --threads 6 -t sample_vrnt.g.vcf.gz
 ```
 
-Individuals were combined per species with ```GATK``` CombineGVCFs.
+Individuals were combined into cohorts (i.e. one file per species) with ```GATK``` CombineGVCFs.
 
 ```
 gatk CombineGVCFs \
@@ -147,7 +147,7 @@ gatk VariantFiltration \
 -O allPops-CorVFnoQual.g.vcf.gz
 ```
 
-Using ```VCFtools``` v0.1.17. Sites failing GATK filters were removed, and variants were retained if genotyped in at least 50% of individuals.
+Using ```VCFtools``` v0.1.17, sites failing GATK filters were removed, and variants were retained if genotyped in at least 50% of individuals.
 
 ```
 vcftools --gzvcf allPops-CorVFnoQual.g.vcf.gz \
@@ -164,6 +164,22 @@ vcftools --gzvcf allPops-CorVFnoQualMM.g.vcf.gz \
 --recode --recode-INFO-all --stdout | gzip -c > allPops-CorVFnoQualMMdp3.g.vcf.gz
 ```
 
+To identify low-quality individuals (high missingness), per-individual missing data proportions were computed. The output file (out.imiss) has the fifth column as the proportion missing.
+
+```
+vcftools --gzvcf allPops-CorVFnoQualMMdp3.g.vcf.gz \
+--missing-indv \
+--out allPops-CorVFnoQualMMdp3MissingInds
+```
+
+[put missing distribution graph here!!! ]
+
+As all individuals contained > XXX, then they were all retained. 
+
+
+
+
+
 Mean depth per site was calculated.
 
 ```
@@ -171,6 +187,9 @@ vcftools --gzvcf allPops-CorVFnoQualMMdp3.g.vcf.gz \
 --site-mean-depth \
 --out allPops-CorVFnoQualMMdp3MeanDepth.txt
 ```
+
+
+
 
 Sites were retained if mean depth was between 10 and 100, and only biallelic sites were kept.
 
