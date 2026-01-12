@@ -4,11 +4,15 @@ This repository contains step-by-step instructions, code and data for:
 Maddie E. James, Jonathan D. Mitchell, Travis Britton, Ben Halliwell, Barbara Holland, Ian Wright, Daniel Ortiz-Barrientos.
 Genotypic and phenotypic convergence due to climatic adaptation in *Eucalyptus*.
 
-# Bioinformatics
+# Trait analysis
+
+# Genetics analysis
+
+## Bioinformatics
 
 Leaf samples were sent to the Australian Genome Research Facility for DNA extractions and library preparation with the Illumina DNA Prep M Library Prep kit. Samples were pooled in equimolar concentrations and sequenced on two lanes of the NovaSeq 600 S4, 300 cycle with 150bp paired-end sequencing.
 
-## Quality filtering and trimming
+### Quality filtering and trimming
 For each sample raw reads were quality-trimmed with ```fastp``` v0.23.4, using: minimum base quality 10, maximum uncalled bases 50, and minimum read length 50 bp. An HTML report was generated for each sample.
 
 ```
@@ -17,7 +21,7 @@ fastp --in1 forward.fastq.gz --in2 reverse.fastq.gz \
 -q 10 -u 50 -l 50 -w 1 -h sample_fastp.html
 ```
 
-## Read alignment
+### Read alignment
 Reads were mapped to the *Eucalyptus grandis* v2.0 reference genome using ```BWA-MEM``` v0.7.19. Read groups were added during mapping. The SAM output was piped into ```SAMtools``` v1.19 for coordinate sorting and BAM creation.
 
 ```
@@ -26,14 +30,14 @@ trimmed_R1.fastq.gz trimmed_R2.fastq.gz | \
 samtools sort -@ 12 -o sample_srt.bam
 ```
 
-## Alignment statistics
+### Alignment statistics
 Alignment statistics (number and percentage of reads mapped) were generated with ```SAMtools``` v1.19.
 
 ```
 samtools flagstat sample_srt.bam > sample_srt_stats.txt
 ```
 
-## Cleaning BAM files
+### Cleaning BAM files
 ```Picard``` v3.1.1 CleanSam was used to clean each BAM prior to duplicate marking.
 
 ```
@@ -42,7 +46,7 @@ INPUT=sample_srt.bam \
 OUTPUT=sample_cln.bam
 ```
 
-## PCR duplicate marking and indexing
+### PCR duplicate marking and indexing
 PCR duplicates were marked with ```Picard``` MarkDuplicates. The resulting BAM files were indexed with ```SAMtools```, and per-sample coverage was calculated with SAMtools coverage.
 
 ```
@@ -56,7 +60,7 @@ samtools index sample_PCRm_cln.bam
 samtools coverage sample_PCRm_cln.bam --output sample_coverage.txt
 ```
 
-## Variant calling
+### Variant calling
 Per-sample variant discovery was performed with ```GATK``` v4.4.0.0 HaplotypeCaller in GVCF mode, retaining both variant and invariant sites. The example below shows one chromosome. Scripts were run in parallel across chromosomes and samples.
 
 ```
@@ -88,7 +92,7 @@ gatk CombineGVCFs \
 -O species1.g.vcf.gz
 ```
 
-## Joint genotyping 
+### Joint genotyping 
 For each species, joint genotyping was performed per chromosome with ```GATK``` GenotypeGVCFs, retaining variant and invariant sites. The example below shows one chromosome. Scripts were run in parallel across chromosomes and samples.
 
 ```
@@ -127,7 +131,7 @@ bcftools view allPops-Cor.g.vcf -Oz -o allPops-Cor.g.vcf.gz
 bcftools index -t allPops-Cor.g.vcf.gz
 ```
 
-## SNP filtering
+### SNP filtering
 Site-level hard filters were applied with ```GATK``` VariantFiltration.
 
 ```
@@ -192,10 +196,10 @@ Final dataset: 160,686,818 variant and invariant sites; 12,608,766 variant sites
 
 
 
-# Convergence divergence models
+## Convergence divergence models
 
 
-# Population genetics analyses
+## Population genetics analyses
 
 
-# Genotype-Environment Association (GEA) analysis
+## Genotype-Environment Association (GEA) analysis
