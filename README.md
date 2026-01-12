@@ -248,10 +248,7 @@ vcftools --vcf allPops-CorVFnoQualMMdp3MaxMD100MinMD10bialleleMpp70MM80.recode.v
 --out allPops-CorVFnoQualMMdp3MaxMD100MinMD10bialleleMpp70MM80noIndelsVCFtools
 ```
 
-Final dataset: 160,686,818 variant and invariant sites; 12,608,766 variant sites with MAF ≥ 0.05. As the final dataset is quite large, it is available upon request. 
-
-
-
+Final dataset (allPops.vcf): 160,686,818 variant and invariant sites; 12,608,766 variant sites with MAF ≥ 0.05. As the final dataset is quite large, it is available upon request. 
 
 ## Convergence divergence models
 [to complete]
@@ -259,5 +256,58 @@ Final dataset: 160,686,818 variant and invariant sites; 12,608,766 variant sites
 ## Population genetics analyses
 [to complete]
 
+
+
 ## Genotype-Environment Association (GEA) analysis
-[to complete]
+
+The VCF file (allPops.vcf) was filtered for a MAF ≥ 0.01.
+
+```
+vcftools --vcf allPops.vcf --recode --recode-INFO-all --maf 0.01 --out allPopsMAF0.01
+```
+
+SNPs in LD were removed in ```PLINK``` v1.9 with the following parameters: a window size of 50 SNPs, step size of 5 SNPs and r2 threshold of 0.2, leaving 4,202,577 SNPs across the 11 chromosomes.
+
+```
+plink --vcf allPopsMAF0.01.recode.vcf --indep-pairwise 50 5 0.2 --allow-extra-chr --set-missing-var-ids @:# --out allPopsMAF0.01_LD-50-5-0.2
+plink --vcf allPopsMAF0.01.recode.vcf --extract allPopsMAF0.01_LD-50-5-0.2.prune.in --recode vcf --set-missing-var-ids @:# --allow-extra-chr --out allPopsMAF0.01_LD-50-5-0.2
+```
+
+As the BayPass core model requires a set of neutral SNPs, flobal FST was calculated among all species.
+
+```
+vcftools --vcf allPopsMAF0.01_LD-50-5-0.2.vcf \
+         --weir-fst-pop dealba.txt \
+         --weir-fst-pop largiflo.txt \
+         --weir-fst-pop moluc.txt \
+         --weir-fst-pop nitida.txt \
+         --weir-fst-pop regnans.txt \
+         --weir-fst-pop siderox.txt \
+         --weir-fst-pop stricta.txt \
+         --weir-fst-pop vicina.txt \
+         --weir-fst-pop viridis.txt \
+         --out globalFst_allPopsMAF0.01_LD-50-5-0.2
+```
+
+We retained only the chromosome SNPs (Chr01–Chr11) and determine the 90th-percentile FST cutoff (~0.57 in our dataset). 
+
+```
+plink --vcf MAF0.01_LD-50-5-0.2.vcf \
+      --chr 1-11 \
+      --allow-extra-chr --set-missing-var-ids @:# \
+      --exclude top10pct_Fst_positions.txt \
+      --recode vcf \
+      --out allPopsMAF0.01_LD-50-5-0.5_chr1-11_top10FstRemoved
+```
+
+Next, allele counts were obtained per species. Note the ---keep-allele-order keeps consistent ref/alt alleles across the files (column A1 is ref, column A2 is alt). 
+
+```
+for pop in dealba largiflo moluc nitida regnans siderox stricta vicina viridis; do
+    ./plink --vcf allPopsMAF0.01_LD-50-5-0.2_chr1-11_top10FstRemoved.vcf --allow-extra-chr --keep-allele-order --keep ${pop}_samples_plink_fixed.txt --freq --out ${pop}_allelefreq_LD-50-5-0.2_chr1-11_top10FstRemoved
+done
+```
+
+We used a custom script () to convert the VCF file into BayPass format. 
+
+
