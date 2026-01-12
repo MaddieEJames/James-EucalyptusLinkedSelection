@@ -172,13 +172,9 @@ vcftools --gzvcf allPops-CorVFnoQualMMdp3.g.vcf.gz \
 --out allPops-CorVFnoQualMMdp3MissingInds
 ```
 
-<img src="images/Missing_data_per_individual.png" width="800" />
+<img src="images/Missing_data_per_individual.png" width="700" />
 
-As all individuals contained less than 40% missing data, they were all retained. 
-
-
-
-
+As all individuals contained less than 40% missing data, they were all retained.
 
 Mean depth per site was calculated.
 
@@ -187,6 +183,8 @@ vcftools --gzvcf allPops-CorVFnoQualMMdp3.g.vcf.gz \
 --site-mean-depth \
 --out allPops-CorVFnoQualMMdp3MeanDepth.txt
 ```
+
+[IMAGE!!!]
 
 
 
@@ -202,7 +200,46 @@ vcftools --gzvcf allPops-CorVFnoQualMMdp3.g.vcf.gz \
 --out allPops-CorVFnoQualMMdp3MaxMD100MinMD10biallele.g.vcf.gz
 ```
 
-Per-species missingness was computed, and sites with >70% missing in any species were removed. Overall missingness >20% was also filtered out. Indels were removed.
+To ensure representation across populations, we created a 'keep' list, where individuals were grouped by species using a two-column file (individual_name, species_id). The proportion of missing data per site was computed for each species (produces *.lmiss files; column 6 is proportion missing). 
+
+```
+vcftools --vcf allPops-CorVFnoQualMMdp3MaxMD100MinMD10biallele.g.vcf.gz.recode.vcf --keep dealba_keep   --missing-site --out dealba
+vcftools --vcf allPops-CorVFnoQualMMdp3MaxMD100MinMD10biallele.g.vcf.gz.recode.vcf --keep largiflo_keep --missing-site --out largiflo
+vcftools --vcf allPops-CorVFnoQualMMdp3MaxMD100MinMD10biallele.g.vcf.gz.recode.vcf --keep moluc_keep    --missing-site --out moluc
+vcftools --vcf allPops-CorVFnoQualMMdp3MaxMD100MinMD10biallele.g.vcf.gz.recode.vcf --keep nitida_keep   --missing-site --out nitida
+vcftools --vcf allPops-CorVFnoQualMMdp3MaxMD100MinMD10biallele.g.vcf.gz.recode.vcf --keep regnans_keep  --missing-site --out regnans
+vcftools --vcf allPops-CorVFnoQualMMdp3MaxMD100MinMD10biallele.g.vcf.gz.recode.vcf --keep siderox_keep  --missing-site --out siderox
+vcftools --vcf allPops-CorVFnoQualMMdp3MaxMD100MinMD10biallele.g.vcf.gz.recode.vcf --keep stricta_keep  --missing-site --out stricta
+vcftools --vcf allPops-CorVFnoQualMMdp3MaxMD100MinMD10biallele.g.vcf.gz.recode.vcf --keep vicina_keep   --missing-site --out vicina
+vcftools --vcf allPops-CorVFnoQualMMdp3MaxMD100MinMD10biallele.g.vcf.gz.recode.vcf --keep viridis_keep  --missing-site --out viridis
+```
+
+A bad loci list was built per species (>70% missing in any species), keeping CHR and POS columns. 
+
+```
+cat dealba.lmiss largiflo.lmiss moluc.lmiss nitida.lmiss regnans.lmiss siderox.lmiss stricta.lmiss vicina.lmiss viridis.lmiss \
+| awk 'NR>1 && $6 > 0.7 {print $1"\t"$2}' > badloci0.7
+```
+
+These positions were excluded from the VCFfile.
+
+```
+vcftools --vcf allPops-CorVFnoQualMMdp3MaxMD100MinMD10biallele.g.vcf.gz.recode.vcf \
+--exclude-positions badloci0.7 \
+--recode --recode-INFO-all \
+--out allPops-CorVFnoQualMMdp3MaxMD100MinMD10bialleleMpp70
+```
+
+Sites were removed with >20% overall missing data.
+
+```
+vcftools --vcf allPops-CorVFnoQualMMdp3MaxMD100MinMD10bialleleMpp70.recode.vcf \
+--max-missing 0.8 \
+--recode --recode-INFO-all \
+--out allPops-CorVFnoQualMMdp3MaxMD100MinMD10bialleleMpp70MM80
+```
+
+Indels were removed.
 
 ```
 vcftools --vcf allPops-CorVFnoQualMMdp3MaxMD100MinMD10bialleleMpp70MM80.recode.vcf \
@@ -211,7 +248,7 @@ vcftools --vcf allPops-CorVFnoQualMMdp3MaxMD100MinMD10bialleleMpp70MM80.recode.v
 --out allPops-CorVFnoQualMMdp3MaxMD100MinMD10bialleleMpp70MM80noIndelsVCFtools
 ```
 
-Final dataset: 160,686,818 variant and invariant sites; 12,608,766 variant sites with MAF ≥ 0.05.
+Final dataset: 160,686,818 variant and invariant sites; 12,608,766 variant sites with MAF ≥ 0.05. As the final dataset is quite large, it is available upon request. 
 
 
 
