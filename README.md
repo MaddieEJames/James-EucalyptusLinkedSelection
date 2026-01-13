@@ -252,7 +252,37 @@ Final dataset (allPops.vcf): 160,686,818 variant and invariant sites; 12,608,766
 [to complete]
 
 ## Population genetics analyses
-[to complete]
+
+We calculated population genetics statistics to examine signatures of selection along the genome. This was undertaken for the three species pairs with 10 individuals per species: the two wet-dry contrasts of *E. moluccana*–*E. largiflorens* and *E. dealbata*–*E. vicina*, and the wet-wetter contrast of *E. nitida*–*E. regnans*. FST, dXY and π were calculated with 20kB non-overlapping sliding windows in ```pixy``` v1.2.10, which accounts for monomorphic sites when calculating diversity and divergence statistics. 
+
+```
+pixy --stats pi fst dxy \
+--vcf allPops.vcf.gz \
+--populations allPops_popfile.txt \
+--output_prefix 20000 \
+--window_size 20000 \
+--n_cores 6 \
+```
+
+Tajima’s D was calculated for each population in VCFtools using 20kB non-overlapping sliding windows. 
+
+```
+vcftools --vcf allPops.vcf --keep dealba.txt --TajimaD 20000 --out dealba_tajimasD_20000
+vcftools --vcf allPops.vcf --keep largiflo.txt --TajimaD 20000 --out largiflo_tajimasD_20000
+vcftools --vcf allPops.vcf --keep moluc.txt --TajimaD 20000 --out moluc_tajimasD_20000
+vcftools --vcf allPops.vcf --keep nitida.txt --TajimaD 20000 --out nitida_tajimasD_20000
+vcftools --vcf allPops.vcf --keep regnans.txt --TajimaD 20000 --out regnans_tajimasD_20000
+vcftools --vcf allPops.vcf --keep vicina.txt --TajimaD 20000 --out vicina_tajimasD_20000
+```
+
+[R code for combining files and plotting]
+
+
+
+
+
+
+[to finish]
 
 ## Genotype-Environment Association (GEA) analysis
 
