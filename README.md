@@ -1,5 +1,3 @@
-# James-et-al.2026-Eucalyptus
-
 This repository contains step-by-step instructions, code and data for:
 Maddie E. James, Jonathan D. Mitchell, Travis Britton, Ben Halliwell, Barbara Holland, Ian Wright, Daniel Ortiz-Barrientos.
 Genotypic and phenotypic convergence due to climatic adaptation in *Eucalyptus*.
@@ -328,7 +326,9 @@ g_baypass -countdatafile baypass_allele_counts_MAF0.01_LD-50-5-0.2_chr1-11.txt -
 
 ```
 
-The median of the three replicate ouput files was caluclated: [repMedian_summary_betai_reg.out](Genotype-Environment%20Association%20analysis/repMedian_summary_betai_reg.out). The results were summarised and plotted in R. See [Plotting_and_GenicIntergenic.R](Genotype-Environment%20Association%20analysis/Plotting_and_GenicIntergenic.R), lines 1-150 for code and details. 
+The median of the three replicate ouput files was caluclated: [repMedian_summary_betai_reg.out](Genotype-Environment%20Association%20analysis/repMedian_summary_betai_reg.out). The results were summarised and plotted in R. See [Plotting_and_GenicIntergenic.R](Genotype-Environment%20Association%20analysis/Plotting_and_GenicIntergenic.R), lines 1-150 for code and details. See lines 153-210 for the code for plotting the bayes factors (BF) vs the effect size per SNP. 
+
+We mapped the outlier SNPs to the corresponding *Eucalyptus* genes and *Arabidopsis* orthologues based on the information in the annotated *E. grandis* reference genome. see lines 213-501 of the above R code for details and various summary plots. 
 
 
 
