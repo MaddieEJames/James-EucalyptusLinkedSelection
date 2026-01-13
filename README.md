@@ -1,4 +1,4 @@
-u# James-et-al.2026-Eucalyptus
+# James-et-al.2026-Eucalyptus
 
 This repository contains step-by-step instructions, code and data for:
 Maddie E. James, Jonathan D. Mitchell, Travis Britton, Ben Halliwell, Barbara Holland, Ian Wright, Daniel Ortiz-Barrientos.
@@ -310,7 +310,7 @@ for pop in dealba largiflo moluc nitida regnans siderox stricta vicina viridis; 
 done
 ```
 
-We used a custom script ([convert_to_baypass.sh](Genotype-Environment Association Analysis/convert_to_baypass.sh)) to convert the VCF file (with the top 10% of global FST outliers removed) into BayPass format of allele counts. The input file can be found here: [baypass_allele_counts_MAF0.01_LD-50-5-0.2_chr1-11_top10FstRemoved.txt](Genotype-Environment Association Analysis/baypass_allele_counts_MAF0.01_LD-50-5-0.2_chr1-11_top10FstRemoved.txt). 
+We used a custom script ([convert_to_baypass.sh](Genotype-Environment Association Analysis/convert_to_baypass.sh)) to convert the VCF file (with the top 10% of global FST outliers removed) into BayPass format of allele counts. The input file can be found here: [baypass_allele_counts_MAF0.01_LD-50-5-0.2_chr1-11_top10FstRemoved.txt](Genotype-Environment Association Analysis/baypass_allele_counts_MAF0.01_LD-50-5-0.2_chr1-11_top10FstRemoved.txt.zip). 
 
 The ```BayPass``` core model was run with three independent replicates (each with a different seed) with the set of neutral SNPs to produce the covariance matrix. 
 
@@ -320,7 +320,7 @@ g_baypass -countdatafile baypass_allele_counts_LD-50-5-0.2_chr1-11_top10FstRemov
 g_baypass -countdatafile baypass_allele_counts_LD-50-5-0.2_chr1-11_top10FstRemoved.txt -outprefix CoreModel_MAF0.01-LD-50-5-0.2_chr1-11_top10FstRemoved_rep3 -seed 13579
 ```
 
-The median of the mat_omega.out ouput file was caluclated for each replicate to generate the input covariance matrix for the standard model. The file can be found here: [BayPass_CoreModel_MAF0.01-LD-50-5-0.2_chr1-11_top10FstRemoved_median_mat_omega.out](Genotype-Environment Association Analysis/BayPass_CoreModel_MAF0.01-LD-50-5-0.2_chr1-11_top10FstRemoved_median_mat_omega.out). The above convert_to_baypass.sh script was used to convert the VCF file (without the top 10% FST outliers removed) into the BayPass format of allele counts. File: [baypass_allele_counts_MAF0.01_LD-50-5-0.2_chr1-11.txt](Genotype-Environment Association Analysis/baypass_allele_counts_MAF0.01_LD-50-5-0.2_chr1-11.txt) The ```BayPass``` standard model was run with three independent replicates (each with a different seed). Mean annual precipitation per species was used as a covariate. The file can be found here: [MeanAnnualPrecipitation_Covariate.txt](Genotype-Environment Association Analysis/MeanAnnualPrecipitation_Covariate.txt). 
+The median of the mat_omega.out ouput file was caluclated for each replicate to generate the input covariance matrix for the standard model. The file can be found here: [BayPass_CoreModel_MAF0.01-LD-50-5-0.2_chr1-11_top10FstRemoved_median_mat_omega.out](Genotype-Environment Association Analysis/BayPass_CoreModel_MAF0.01-LD-50-5-0.2_chr1-11_top10FstRemoved_median_mat_omega.out). The above convert_to_baypass.sh script was used to convert the VCF file (without the top 10% FST outliers removed) into the BayPass format of allele counts. File: [baypass_allele_counts_MAF0.01_LD-50-5-0.2_chr1-11.txt](Genotype-Environment Association Analysis/baypass_allele_counts_MAF0.01_LD-50-5-0.2_chr1-11.txt.zip) The ```BayPass``` standard model was run with three independent replicates (each with a different seed). Mean annual precipitation per species was used as a covariate. The file can be found here: [MeanAnnualPrecipitation_Covariate.txt](Genotype-Environment Association Analysis/MeanAnnualPrecipitation_Covariate.txt). 
 
 
 ```
