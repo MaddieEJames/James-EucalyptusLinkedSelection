@@ -277,9 +277,9 @@ vcftools --vcf allPops.vcf --keep vicina.txt --TajimaD 20000 --out vicina_tajima
 
 We used custom R code [CombiningFiles-allThreePairs.R](Population%genetics%20analyses/CombiningFiles-allThreePairs.R) to combine the above population genetics statistics into a single file per population pair. 
 
-Files are as follows: 
-*E. moluccana*–*E. largiflorens*: [moluc_largiflo_merged.csv](Population%genetics%20analyses/moluc_largiflo_merged.csv)
-*E. dealbata*–*E. vicina*: [dealba_vicina_merged.csv](Population%genetics%20analyses/dealba_vicina_merged.csv)
+Files are as follows:  
+*E. moluccana*–*E. largiflorens*: [moluc_largiflo_merged.csv](Population%genetics%20analyses/moluc_largiflo_merged.csv)  
+*E. dealbata*–*E. vicina*: [dealba_vicina_merged.csv](Population%genetics%20analyses/dealba_vicina_merged.csv)  
 *E. nitida*–*E. regnans*: [nitida_regnans_merged.csv](Population%genetics%20analyses/nitida_regnans_merged.csv)
 
 
