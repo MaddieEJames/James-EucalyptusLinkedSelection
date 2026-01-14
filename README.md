@@ -182,11 +182,6 @@ vcftools --gzvcf allPops-CorVFnoQualMMdp3.g.vcf.gz \
 --out allPops-CorVFnoQualMMdp3MeanDepth.txt
 ```
 
-[IMAGE!!!]
-
-
-
-
 Sites were retained if mean depth was between 10 and 100, and only biallelic sites were kept.
 
 ```
@@ -281,6 +276,22 @@ Files are as follows:
 *E. moluccana*–*E. largiflorens*: [moluc_largiflo_merged.csv](Population%genetics%20analyses/moluc_largiflo_merged.csv)  
 *E. dealbata*–*E. vicina*: [dealba_vicina_merged.csv](Population%genetics%20analyses/dealba_vicina_merged.csv)  
 *E. nitida*–*E. regnans*: [nitida_regnans_merged.csv](Population%genetics%20analyses/nitida_regnans_merged.csv)
+
+R code for plotting genome-wide landscapes of diversity and divergence for each species pair: [Plotting-Lanscapes.R](Population%genetics%20analyses/Plotting-Lanscapes.R).  
+
+We obtained GC content along the *E. grandis* reference genome with ```bedtools```.
+
+```
+bedtools makewindows -g Eucalyptus_grandis.main_genome.scaffolds.fasta.fai -w 20000 > Eucalyptus_grandis.main_genome.scaffolds_windows_20kb.bed
+bedtools nuc -fi Eucalyptus_grandis.main_genome.scaffolds.fasta -bed Eucalyptus_grandis.main_genome.scaffolds_windows_20kb.bed > Eucalyptus_grandis.main_genome.scaffolds_windows_20kb_GCcontent.txt
+```
+
+File: [Eucalyptus_grandis.main_genome.scaffolds_windows_20kb_GCcontent.txt](Population%genetics%20analyses/Eucalyptus_grandis.main_genome.scaffolds_windows_20kb_GCcontent.txt).  
+
+
+
+
+
 
 
 [R code for plotting and summaries etc]
