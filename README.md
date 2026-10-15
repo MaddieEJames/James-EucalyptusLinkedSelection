@@ -1,6 +1,5 @@
 This repository contains step-by-step instructions, code and data for:  
-Maddie E. James, Travis G. Britton, Jonathan D. Mitchell, Ben Halliwell, Barbara Holland, Ian J. Wright, Daniel Ortiz-Barrientos.  
-Pervasive linked selection and non-convergent aridity adaptation in *Eucalyptus*.
+Maddie E. James, Travis G. Britton, Jonathan D. Mitchell, Ben Halliwell, Barbara Holland, Ian J. Wright, Daniel Ortiz-Barrientos. Pervasive linked selection and non-convergent aridity adaptation in *Eucalyptus*.
 
 # Genetics analysis
 
