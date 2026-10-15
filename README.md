@@ -393,5 +393,3 @@ Islands were regions in the top 5% of the genome-wide FST distribution spanning 
 
 ### Island features compared with background
 Each island was compared with background windows (all windows not in any island) for π in each population, *d*XY, recombination rate, gene density and GC content using two-sided Wilcoxon rank-sum tests, with Benjamini-Hochberg correction within each feature and species pair. Code: [Islands-vs-Background.R](Data%20files%20and%20code/Islands-vs-Background.R)
-
-<img width="451" height="674" alt="image" src="https://github.com/user-attachments/assets/8f488e87-bcfa-444b-b08e-5f4feca97866" />
